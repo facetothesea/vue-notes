@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>vue counter</title>
+  <script src="./static/js/vue.min.js"></script>
+</head>
+
+<body>
+  <div id="app">
+    <button @click="change">Change</button>
+    <span>{{ RMB }}</span>
+    <input v-bind:value="finalvalue"></input>
+
+    <hr />
+
+    <input type="text" v-model="message"></input>
+    <input type="checkbox" v-model="checks" value="1"></input>
+    <input type="checkbox" v-model="checks" value="2"></input>
+    <input type="checkbox" v-model="checks" value="3"></input>
+    <br>
+
+    <input type="radio" value="1" v-model="which">男</input>
+    <input type="radio" value="2" v-model="which">女</input>
+    <br>
+    <select v-model="which2">
+      <option which2>1</option>
+      <option which2>2</option>
+      <option which2>3</option>
+    </select>
+    <select v-model="which3" multiple>
+      <option which2>1</option>
+      <option which2>2</option>
+      <option which2>3</option>
+    </select>
+    <textarea v-model="msg" rows="10" columns="100"></textarea>
+    <span v-text="msg"></span>
+    <div @click="t1">
+      <a href="http://t.cn" v-on:click.prevent.stop="t2">.prevent.stop - > t.cn</a>
+      <a href="http://t.cn" v-on:click="t2">no stop - t.cn</a>
+    </div>
+    <pre>{{ $data }}</pre>
+  </div>
+  <script>
+    var app = new Vue({
+      el: '#app',
+      data: {
+        thing: 1,
+        thing2: 1,
+        thing3: [1, 2, 3, 4, 5],
+        value: 42,
+        message: "",
+        checks: ["1"],
+        which: "1",
+        which2: "1",
+        which3: ["1"],
+        msg: ''
+      },
+      computed: {
+        RMB: function () {
+          return "￥" + this.thing + Math.random()
+        },
+        finalvalue: function () {
+          return this.thing + this.thing2 + this.value
+        }
+      },
+      watch: {
+        thing: function (val, oldVal) {
+          alert('changd', val, ':', oldVal);
+          this.thing2 = this.thing + Math.random();
+          this.thing3.splice(1, 1);
+        },
+        thing2: 'changed',
+        thing3: {
+          handler: function (val, oldVal) {
+            alert('changed');
+          },
+          deep: true
+        }
+      },
+      mounted() {
+        this.$watch('thing', function (val, oldVal) {
+          alert('this.$watch. exec');
+        })
+      },
+      methods: {
+        change: function () {
+          this.thing++;
+        },
+        changed: function (val, oldVal) {
+          console.log('changed' + val + ':' + oldVal);
+        },
+        t1() { console.log("t1") },
+        t2() { console.log("t2") }
+      }
+    });
+  </script>
+</body>
+
+</html>

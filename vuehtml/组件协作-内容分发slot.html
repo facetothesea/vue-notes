@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>vue 内容分发 slot</title>
+  <script src="./static/js/vue.min.js"></script>
+</head>
+
+<body>
+  <div id="app">
+    <sticky>
+      <div slot="title">
+        <h3>Title</h3>
+        <div slot="body">
+          <p>
+            Body Foo Bar Baz ddd
+          </p>
+        </div>
+      </div>
+    </sticky>
+  </div>
+  <script>
+    Vue.component('sticky', {
+      template: `
+        <div>
+          <div class="wrapper">
+            <div>
+              <div class="title">
+                <slot name="title"></slot>
+              </div>
+              <div class="body">
+                <slot name="body"></slot>
+              </div>
+            </div>
+          </div>
+        </div>
+        `
+    })
+    new Vue({
+      el: '#app'
+    });
+  </script>
+  <style>
+    .wrapper {
+      display: flex;
+      width: 180px;
+      height: 150px;
+      background: yellow;
+      border-radius: 10px;
+    }
+
+    .title {
+      border-bottom: 1px solid red;
+    }
+
+    .body {
+      border-bottom: 1px solid blue;
+    }
+  </style>
+</body>
+
+</html>

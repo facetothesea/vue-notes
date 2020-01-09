@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>vue 总线传递 slot</title>
+  <script src="./static/js/vue.min.js"></script>
+</head>
+
+<body>
+  <div id="app">
+    <foo></foo>
+    <bar></bar>
+  </div>
+  <script>
+    var bus = new Vue({});
+    var foo = Vue.component('foo', {
+      template: '<button v-on:click="inc">{{ count }}</button>',
+      data: function () {
+        return { count: 0 }
+      },
+      mounted() {
+        bus.$on('foo-inc', this.doinc)
+      },
+      methods: {
+        inc: function () {
+          bus.$emit('bar-inc', this)
+        },
+        doinc: function () {
+          this.count++;
+        }
+      }
+    });
+    var bar = Vue.component('bar', {
+      template: '<button v-on:click="inc">{{ count }}</button>',
+      data: function () {
+        return { count: 0 }
+      },
+      mounted() {
+        bus.$on('bar-inc', this.doinc)
+      },
+      methods: {
+        inc: function () {
+          bus.$emit('foo-inc', this)
+        },
+        doinc: function () {
+          this.count++
+        }
+      }
+    })
+
+    new Vue({
+      el: '#app',
+      //components:{foo,bar}
+    });
+  </script>
+
+</body>
+
+</html>

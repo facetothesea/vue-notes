@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>vue EventBus </title>
+  <script src="./static/js/vue.min.js"></script>
+</head>
+
+<body>
+  <div id="todo-app">
+    <h1>todo app</h1>
+    <new-todo></new-todo>
+    <todo-list></todo-list>
+  </div>
+  <script>
+    var eventBus = new Vue({
+      data() {
+        return {
+          todos: ['A', 'B', 'C']
+        }
+      },
+      created() {
+        this.$on('add', this.addTodo);
+        this.$on('delete', this.deleteTodo);
+      },
+      beforeDestory() {
+        this.$off('add', this.addTodo);
+        this.$off('delete', this.deleteTodo);
+      },
+      methods: {
+        addTodo: function (newTodo) {
+          this.todos.push(newTodo);
+        },
+        deleteTodo: function (i) {
+          this.todos.splice(i, 1);
+        }
+      }
+    });
+
+    var newTodo = {
+      template: `
+      <div>
+        <input type="test" autofocus v-model="newtodo"></input>
+        <button @click="add">add</button>
+      </div>
+      `,
+      data() {
+        return {
+          newtodo: ''
+        }
+      },
+      methods: {
+        add: function () {
+          if (this.newtodo !== "") {
+            eventBus.$emit('add', this.newtodo)
+            this.newtodo = '';
+          }
+        }
+      }
+    };
+
+    var todoList = {
+      template: `
+      <ul>
+        <li v-for="(item,index) in items">{{ item }} 
+          <button @click="rm(index)">X</button>
+        </li>
+      </ul>`,
+      data() {
+        return {
+          items: eventBus.todos
+        }
+      },
+      methods: {
+        rm: function (i) {
+          eventBus.$emit('delete', i);
+        }
+      }
+    }
+
+
+    new Vue({
+      el: '#todo-app',
+      components: {
+        newTodo: newTodo,
+        todoList: todoList
+      }
+    });
+  </script>
+
+</body>
+
+</html>

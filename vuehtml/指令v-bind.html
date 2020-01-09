@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>vue 自定义指令</title>
+  <script src="./static/js/vue.min.js"></script>
+</head>
+
+<body>
+  <div id="app">
+    <button @click="f=!f">toggle</button>
+    <input v-hidden="f"></input>
+  </div>
+  <script>
+    Vue.directive('hidden', {
+      update: function (el, binding) {
+        el.style.display = binding.value ? 'none' : 'inline';
+      }
+    })
+    var app = new Vue({
+      el: '#app',
+      data: {
+        f: false
+      }
+    });
+  </script>
+</body>
+
+</html>

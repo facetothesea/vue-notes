@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>vue 内容分发</title>
+  <script src="./static/js/vue.min.js"></script>
+</head>
+
+<body>
+  <div id="app">
+    <wrapper>
+      <navi></navi>
+      <content1>
+        <topics></topics>
+        <userinfo></userinfo>
+      </content1>
+    </wrapper>
+    <foo>
+      <p>parent content</p>
+    </foo>
+    <hr />
+    <mylayout>
+      <h1 slot="header">title</h1>
+      <p>content</p>
+    </mylayout>
+  </div>
+  <script>
+    Vue.component('topics', {
+      template: '<div class="topics">topics</div>'
+    });
+    Vue.component('userinfo', {
+      template: '<div class="userinfo">userinfo ...</div></div>'
+    });
+    Vue.component('content1', {
+      template: '<div class="content1">content1 ...</div>'
+    });
+    var navi = Vue.component('navi', {
+      template: '<div class="navi">navi...</div>'
+    });
+    var wrapper = Vue.component('wrapper', {
+      template: '<div class="wrapper"><slot></slot></div>'
+    });
+    var foo = Vue.component('foo', {
+      template: "<div><slot>备用内容</slot></div>"
+    })
+    var mylayout = Vue.component('mylayout', {
+      template: "<div class='container'><header><slot name='header'></slot></header><body><slot></slot></body></div>"
+    })
+    new Vue({
+      el: '#app',
+      components: {
+        wrapper, foo
+      }
+    });
+  </script>
+</body>
+
+</html>

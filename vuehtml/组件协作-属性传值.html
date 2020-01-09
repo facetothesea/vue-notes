@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>vue 组件</title>
+  <script src="./static/js/vue.min.js"></script>
+</head>
+
+<body>
+  <div id="app">
+    传递字符串<child message="hello"></child><br>
+    传递表达式<child :message="hello+'world'"></child>
+  </div>
+  <script>
+    Vue.component('child', {
+      template: '<span>{{message}}</span>',
+      props: ['message']
+    });
+    new Vue({
+      el: '#app',
+      data: {
+        hello: 'helllllllllllllllllllllllo'
+      }
+    })
+  </script>
+</body>
+
+</html>

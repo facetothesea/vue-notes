@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>vue 组件</title>
+  <script src="./static/js/vue.min.js"></script>
+</head>
+
+<body>
+  <div id="app">
+    <tag></tag>
+    <hr>
+    </hr>
+    <component v-bind:is="current"></component>
+  </div>
+  <script>
+    Vue.component('tag', {
+      template: `<div>one component rule all other</div>`
+    });
+    new Vue({
+      el: '#app',
+      data: {
+        current: 'archive',
+        i: 0,
+        b: ['home', 'posts', 'archive']
+      },
+      components: {
+        home: { template: '<h1>home</h1>' },
+        posts: { template: '<h1>posts</h1>' },
+        archive: { template: '<h1>archive</h1>' }
+      },
+      methods: {
+        a() {
+          this.i = this.i % 3;
+          this.current = this.b[this.i];
+          this.i++;
+          setTimeout(this.a, 2000);
+          console.log(this.i);
+        }
+      },
+      mounted() {
+        setTimeout(this.a, 2000);
+      }
+    });
+  </script>
+</body>
+
+</html>

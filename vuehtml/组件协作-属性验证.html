@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>vue 组件</title>
+  <script src="./static/js/vue.min.js"></script>
+</head>
+
+<body>
+  <div id="app">
+    <child v-bind:age="age"></child>
+  </div>
+  <script>
+    Vue.component('child', {
+      template: '<span>You are {{age}}</span>',
+      //props:{'age':Number},
+      props: {
+        'age': {
+          type: Number,
+          validator: function (value) {
+            return value > 0 && value < 150
+          },
+          required: true,
+          default: 50
+        }
+      }
+    });
+    new Vue({
+      el: '#app',
+      data: {
+        age: '230'  //开发彼会提示警告
+      }
+    })
+  </script>
+</body>
+
+</html>

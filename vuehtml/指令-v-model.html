@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>vue counter</title>
+  <script src="./static/js/vue.min.js"></script>
+  <style>
+    li {
+      display: inline-block;
+      width: 100%;
+      text-align: left;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="todo-app">
+    <h1>todo app</h1>
+    <input type="text" placeholder="new todo " v-model="todo"></input>
+    <button @click="add()">Add</button>
+    <ul>
+      <li v-for="(item,index) in items">{{ item }}<button @click="rm(index)">X</button></li>
+    </ul>
+  </div>
+  <script>
+    var app = new Vue({
+      el: '#todo-app',
+      data: {
+        items: ['item1', 'item2', 'item3'],
+        todo: ''
+      },
+      methods: {
+        add: function (i) {
+          if (this.todo) {
+            this.items.push(this.todo);
+            this.todo = "";
+          }
+        },
+        rm: function (i) {
+          this.items.splice(i, 1);
+        }
+      }
+    });
+  </script>
+</body>
+
+</html>
