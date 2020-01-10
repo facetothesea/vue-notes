@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>vue 异步组件</title>
+  <script src="./static/js/vue.min.js"></script>
+  <script src="./static/js/vue-router.js"></script>
+</head>
+
+<body>
+  <div id="app">
+    <h1>Router test</h1>
+    <p>
+      <router-link to='/home'>Home</router-link>
+      <router-link to='/about'>About</router-link>
+    </p>
+    <router-view></router-view>
+  </div>
+
+  <script>
+    function load(componentName,path){
+      return new Promise(function(resolve,reject){
+        var script=document.createElement('script');
+        script.src=path;
+        script.async=true;
+        script.onload=function(){
+          var component=Vue.component(componentName);
+          if(component){
+            resolve(component);
+          }else{
+            reject();
+          }
+        }
+      })
+    }
+    var router=new VueRouter({
+      routes:[
+        {
+          path:'/',
+          redirect:'/home'
+        },
+        {
+          path:'/home',
+          component:{
+            template:'<div>Home page</div>'
+          },
+        },
+        {
+          path:'/about',
+          component:function(resolve,reject){
+            load('about','/about.js').then(resolve,reject);
+          }
+        }
+      ]
+    })
+
+    var app=new Vue({
+      el:'#app',
+      router:router
+    })
+  </script>
+
+</body>
+
+
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>vue vue-resource:请先启动express服务</title>
+  <script src="./static/js/vue.min.js"></script>
+  <script src="./static/js/vue-resource.js"></script>
+</head>
+
+<body>
+  <div id="app">
+    {{msg}}
+  </div>
+  <script>
+    var app = new Vue({
+      el: "#app",
+      data: {
+        msg: 'hello'
+      },
+      mounted() {
+        this.$http.get('/users').then((response) => {
+          var j = JSON.parse(response.body)
+          //console.log(j.length == 3, j[0].name, j[1].name, j[2].name)
+          this.msg=this.msg+j[0].name+j[1].name+j[2].name;
+        }, (error) => {
+          console.log('error', error);
+        });
+      }
+    })
+
+  </script>
+
+</body>
+
+</html>

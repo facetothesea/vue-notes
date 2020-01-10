@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>vue render</title>
+  <script src="./static/js/vue.min.js"></script>
+</head>
+<body>
+  <div id="app">
+    <hdr :level="1">abc</hdr>
+    <hdr :level="2">xyz</hdr>
+  </div>
+  <script>
+    Vue.component("hdr",{
+      render:function(createElement){
+        return createElement(
+          "h"+this.level,
+          this.$slots.default
+        )
+      },
+      props:{
+        level:{
+          type:Number,
+          required:true
+        }
+      }
+    });
+    new Vue({
+      el:"#app"
+    });
+  </script>
+</body>
+
+</html>

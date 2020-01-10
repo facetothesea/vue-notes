@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>vue 总线传递 slot</title>
+  <script src="./static/js/vue.min.js"></script>
+  <script src="p1.js"></script>
+</head>
+
+<body>
+  <div id="app">    
+  </div>
+  <script>
+    var vue=new Vue();
+    vue.$who.get('Vue Instance');
+    Vue.who('Global Vue');
+  </script>
+
+</body>
+
+</html>

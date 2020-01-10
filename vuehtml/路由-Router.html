@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>vue 路由</title>
+  <script src="./static/js/vue.min.js"></script>
+  <script src="./static/js/vue-router.js"></script>
+</head>
+
+<body>
+  <div id="app">
+    <h1>Router test</h1>
+    <p>
+      <router-link to="/home">Go Home</router-link>
+      <router-link to="/about">Go About</router-link>
+      <br />
+    </p>
+    <router-view></router-view>
+    <br>
+    <h1>Route Alias</h1>
+    <ul>
+      <li>
+        <router-link to="/foo">/foo (renders /home/foo)</router-link>
+      </li>
+      <li>
+        <router-link to="/home/bar-alias">/home/bar-alias (renders /home/bar)</router-link>
+      </li>
+      <li>
+        <router-link to="/baz">/baz (renders /home/baz)</router-link>
+      </li>
+      <li>
+        <router-link to="/home/baz-alias">/home/baz-alias (renders /home/baz)</router-link>
+      </li>
+    </ul>
+  </div>
+
+  <script>
+    const Home = { template: '<div>home page</div>' };
+    const About = { template: '<div>about page</div>' };
+
+    const Foo = { template: '<div>foo</div>' }
+    const Bar = { template: '<div>bar</div>' }
+    const Baz = { template: '<div>baz</div>' }
+
+    const routes = [
+      {
+        path: '/home',
+        component: Home,
+        children: [
+          { path: 'foo', component: Foo, alias: '/foo' },
+          { path: 'bar', component: Bar, alias: '/bar' },
+          { path: 'baz', component: Baz, alias: ['/baz', 'baz-alias'] }
+        ]
+      },
+      { path: '/about', component: About },
+      { path: '/', redirect: '/home' },
+    ]
+    const router = new VueRouter({
+      //mode:"history",
+      routes: routes
+    });
+    const routerTest = new VueRouter({
+      routes: [
+        {
+          path: '/foo', component: Foo,
+          children: [
+            {
+              path: '/bar',
+              component: Bar,
+              meta: { requiresAuth: true }
+            }
+          ]
+        }
+      ]
+    })
+    //全局路由钩子
+    router.beforeEach((to,from,next)=>{
+      console.log(to.path,from.path,'每次请求前处理')
+    })
+    const app = new Vue({
+      el: '#app',
+      data: {},
+      router
+    });
+  </script>
+</body>
+
+</html>
