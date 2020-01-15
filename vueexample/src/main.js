@@ -3,11 +3,15 @@
 import Vue from 'vue'
 import App from './App.vue'
 import VueRouter from 'vue-router'
+import Menu from './components/HomeCircleMenu'
 
 Vue.config.productionTip = false
 
 Vue.use(VueRouter)
 Vue.use(App)
+
+// Vue.use(CircleMenu)
+Vue.component('CircleMenu', Menu)
 
 const Home = {
   template: '<div>home page</div>'
@@ -28,6 +32,10 @@ const router = new VueRouter({
     {
       path: '/',
       redirect: '/home'
+    },
+    {
+      path: '/homecircle',
+      component: Menu
     }
   ]
 })
@@ -39,6 +47,7 @@ new Vue({
   components: {
     App,
     Home,
-    About
+    About,
+    Menu
   }
 })

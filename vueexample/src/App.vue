@@ -2,6 +2,7 @@
   <div id="app">
     <!-- <img src="./assets/logo.png"> -->
     <router-link to="/home">Home2</router-link>
+    <router-link to="/homecircle">HomeCircleMenu</router-link>
     <router-link to="/about">About1</router-link>
     <router-view></router-view>
   </div>
